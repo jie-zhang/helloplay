@@ -1,0 +1,29 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           		controllers.Application.index
+
+# Salon 
+GET     /salon                      		controllers.Salons.index
+GET     /salon/:id                  		controllers.Salons.getSalon(id: Long)
+
+# Style
+GET     /style                      		controllers.Styles.index
+GET     /style/:id                  		controllers.Styles.findById(id: Long)
+GET     /salon/:salonId/styles       	    controllers.Styles.findBySalon(salonId: Long)
+
+
+# Stylist
+GET     /stylist/:id                        controllers.Stylists.findById(id: Long)
+GET     /salon/:salonId/Stylists            controllers.Stylists.findBySalon(salonId: Long)
+
+
+# ADMIN
+#POST    /tasks                      controllers.Application.newTask
+#POST    /tasks/:id/delete           controllers.Application.deleteSalon(id: Long)
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

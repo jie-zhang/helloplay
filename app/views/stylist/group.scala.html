@@ -1,0 +1,21 @@
+@(stylists: Seq[Stylist] = Nil)
+
+<!-- components to list the hair style. -->
+    <span class="toggle"></span>
+    <h4 class="groupName"></h4>
+    <span class="loader">Loading</span>
+    <dl class="options">
+        <dt>Options</dt>
+        <dd>
+            <button class="newProject">AAAA</button>
+            <button class="deleteGroup">BBBB</button>
+        </dd>
+    </dl>
+
+    <ol>
+    @for(stylist <- stylists) {
+    	<li>
+          @views.html.stylist.item(stylist)
+   	</li>
+    }
+   </ol> 

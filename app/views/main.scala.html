@@ -1,0 +1,67 @@
+@(title: Html, nav: String = "")(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.7.1.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-play-1.7.1.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/underscore-min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/backbone-min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/main.js")"></script>
+        
+    </head>
+    <body>
+
+		<!-- top bar -->
+        <div class="topbar">
+            <div class="fill">
+                <div class="container">
+                    <a class="brand" href="@routes.Application.index()">@Messages("general.welcome")</a>
+                    <ul class="nav">
+                        <li class="@("active".when(nav == "hair-salon"))">
+                            <a href="@routes.Salons.index">@Messages("hair.salon")</a>
+                        </li>
+                        <li class="@("active".when(nav == "sytle"))">
+                            <a href="@routes.Styles.index">@Messages("hair.style")</a>
+                        </li>
+                        <li class="@("active".when(nav == "cosmetic-salon"))">
+                            <a href="@routes.Salons.index">@Messages("cosmetic.salon")</a>
+                        </li>
+                        <li class="@("active".when(nav == "cosmetic"))">
+                            <a href="@routes.Styles.index">@Messages("cosmetic.style")</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <div class="content">
+                
+                <div class="page-header">
+                    <h1>@title</h1>
+                </div>
+
+                <div class="row">
+                    <div class="span14">
+                        @content
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+
+        <footer>
+            <p>
+                <a href="http://sz-rontech.com">@Messages("general.powerby")</a>
+            </p>
+        </footer>
+
+    </body>
+</html>

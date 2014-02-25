@@ -1,0 +1,16 @@
+# ignore all dot files;
+.*
+
+# except for .gitignore file;
+!.gitignore
+
+# ignore play! working directory;
+logs
+project/project
+project/target
+target
+tmp
+dist
+/*.iml
+/out
+/RUNNING_PID
