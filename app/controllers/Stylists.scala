@@ -5,6 +5,7 @@ import play.api.mvc._
 import models.Stylist
 import play.api.data._
 import play.api.data.Forms._
+import com.mongodb.casbah.commons.Imports._
 
 import models._
 import views._
@@ -18,14 +19,14 @@ object Stylists extends Controller {
    /**
    * 
    */
-  def findById(styleId: Long) = Action { 
+  def findById(stylistId: ObjectId) = Action { 
 
-    val stylist: Seq[Stylist] = Stylist.findById(styleId)
+    val stylist: Seq[Stylist] = Stylist.findById(stylistId)
     Ok(html.stylist.overview(stylist))
 
   }
   
-  def findBySalon(salonId: Long) = Action {
+  def findBySalon(salonId: ObjectId) = Action {
     
     val stylistsOfSalon: Seq[Stylist] = Stylist.findBySalon(salonId)    
     Ok(html.stylist.overview(stylistsOfSalon))

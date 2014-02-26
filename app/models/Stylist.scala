@@ -1,82 +1,60 @@
 package models
 
-import anorm._
-import anorm.SqlParser._
-import play.api.db._
 import play.api.Play.current
+import play.api.PlayException
 
-case class Stylist(id: Long, label: String, salonId: Long)
+import com.novus.salat._
+import com.novus.salat.dao._
+
+import com.mongodb.casbah.commons.Imports._
+import com.mongodb.casbah.MongoConnection
+
+import com.novus.salat.Context
+
+import mongoContext._
+
+
+case class Stylist(
+    id: ObjectId = new ObjectId,
+    label: String,
+    salonId: ObjectId
+)
+
+
+object StylistDAO extends SalatDAO[Stylist, ObjectId](
+  collection = MongoConnection()(
+    current.configuration.getString("mongodb.default.db")
+      .getOrElse(throw new PlayException(
+          "Configuration error",
+          "Could not find mongodb.default.db in settings"))
+  )("Stylist"))
+
 
 object Stylist {
 
-  val stylist = {
-    get[Long]("id") ~ get[String]("label") ~ get[Long]("salonId") map {
-      case id ~ label ~ salonId => Stylist(id, label, salonId)
+    def findAll(): List[Stylist] = {
+        StylistDAO.find(MongoDBObject.empty).toList
     }
-  }
 
-  // -- Queries
-    
-  /**
-   * Retrieve a Stylist from id.
-   */
-  def findById(id: Long): Seq[Stylist] = {
-    DB.withConnection { implicit connection =>
-      SQL(
-          """select * from stylist where id = {id}"""
-      ).on(
-        'id -> id
-      ).as(Stylist.stylist *)
+    def findById(id: ObjectId): List[Stylist] = {
+        StylistDAO.findOne(MongoDBObject("_id" -> id)).toList
     }
-  }
-  
-    /**
-   * Retrieve All stylists.(by some conditons.)
-   */
-  def findBySalon(salonId: Long): Seq[Stylist] = {
-    DB.withConnection { implicit connection =>
-      SQL(
-        """
-          select * from stylist
-          where salonId = {salonId}
-        """
-      ).on(
-         'salonId -> salonId 
-      ).as(Stylist.stylist *)
-    }
-  }
-  
-   /**
-   * Retrieve All salons.
-   */
-  def findAll(): Seq[Stylist] = {
-    DB.withConnection { implicit connection =>
-      SQL(
-        """
-          select * from stylist 
-        """
-      ).on(
-          
-      ).as(Stylist.stylist *)
-    }
-  }
-  
 
-  // -- Updates
-  /**
-   *   
-   */  
-  def create(stylist: Stylist) {
-    DB.withConnection { implicit c =>
-      SQL(
-          """insert into stylist (id, label, salonId) values ({id}, {label}, {salonId})"""
-      ).on(
-        'id -> stylist.id,
-        'label -> stylist.label,
-        'salonId -> stylist.salonId
-      ).executeUpdate()
+    def findBySalon(salonId: ObjectId): List[Stylist] = {
+        StylistDAO.find(DBObject("salonId" -> salonId)).toList
     }
-  }
+
+    def create(stylist: Stylist): Option[ObjectId] = {
+        StylistDAO.insert(
+            Stylist(
+                label = stylist.label,
+                salonId = stylist.salonId
+            )
+        )
+    }
+
+    def delete(id: String) {
+        StylistDAO.remove(MongoDBObject("_id" -> new ObjectId(id)))
+    }
 
 }
-

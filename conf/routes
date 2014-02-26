@@ -7,22 +7,22 @@ GET     /                           		controllers.Application.index
 
 # Salon 
 GET     /salon                      		controllers.Salons.index
-GET     /salon/:id                  		controllers.Salons.getSalon(id: Long)
+GET     /salon/:id                  		controllers.Salons.getSalon(id: ObjectId)
 
 # Style
 GET     /style                      		controllers.Styles.index
-GET     /style/:id                  		controllers.Styles.findById(id: Long)
-GET     /salon/:salonId/styles       	    controllers.Styles.findBySalon(salonId: Long)
+GET     /style/:id                  		controllers.Styles.findById(id: ObjectId)
+GET     /salon/:salonId/styles       	    controllers.Styles.findBySalon(salonId: ObjectId)
 
 
 # Stylist
-GET     /stylist/:id                        controllers.Stylists.findById(id: Long)
-GET     /salon/:salonId/Stylists            controllers.Stylists.findBySalon(salonId: Long)
+GET     /stylist/:id                        controllers.Stylists.findById(id: ObjectId)
+GET     /salon/:salonId/Stylists            controllers.Stylists.findBySalon(salonId: ObjectId)
 
 
 # ADMIN
 #POST    /tasks                      controllers.Application.newTask
-#POST    /tasks/:id/delete           controllers.Application.deleteSalon(id: Long)
+#POST    /tasks/:id/delete           controllers.Application.deleteSalon(id: ObjectId)
 
 
 # Map static resources from the /public folder to the /assets URL path

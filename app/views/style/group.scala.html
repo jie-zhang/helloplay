@@ -3,9 +3,7 @@
 <ol>
 @for(style <- styles) {
     <li>
-	<p>@style.label</p>
-	<p><a href="@routes.Salons.getSalon(style.salonId)">Check This Salon: @style.salonId</a></p>
-	<p><a href="@routes.Stylists.findById(style.stylistId)">Check This Stylist: @style.stylistId</a></p>
+        @views.html.style.item(style)
     </li>
 }
 </ol>
